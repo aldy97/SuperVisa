@@ -6,7 +6,6 @@ import { useHistory } from "react-router";
 import { connect } from "react-redux";
 import { CLEAR_QUESTIONS_AND_ANSWERS } from "../actions/QuestionAction";
 import { authAxios } from "../utils/authAxios";
-import { BASE_URL } from "../utils/constants";
 
 // Page: renders all questions and all user's corresponding responses
 const Review = (props) => {
@@ -20,12 +19,30 @@ const Review = (props) => {
     };
   });
 
+  const getRequestBody = () => {
+    const body = [];
+    for (let i = 0; i < questions.length; i++) {
+      const answer = answers[i];
+      const question = questions[i];
+      body.push({ question: `${question.id}`, text: answer.text });
+    }
+    return { answers: body };
+  };
+
   // send api request to server for response submission
-  const onSubmitClick = async () => {};
+  const onSubmitClick = async () => {
+    const requestBody = getRequestBody();
+    const response = await authAxios.post(`/api/responses/`, requestBody);
+
+    //TODO: when submission is succ
+    if (response.data) {
+    } else {
+    }
+  };
 
   return (
     <div style={{ textAlign: "center" }}>
-      <div>These are your answers</div>
+      <div>Please review your answers</div>
       <Space direction="vertical">
         {questions.map((question, index) => {
           return (
