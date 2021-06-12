@@ -20,7 +20,7 @@ const NumberQuestion = (props) => {
           onChange={onChange}
         ></Input>
       ) : (
-        <Input value={answer.text} disabled></Input>
+        <div>{answer.text}</div>
       )}
     </Card>
   );

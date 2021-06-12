@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Button, message } from "antd";
-import { authAxios } from "../utils/authAxios";
+import { CenteredBox } from "./Questions";
+import axios from "axios";
+import { BASE_URL } from "../utils/constants";
+import { Button, Space, message } from "antd";
 import { useHistory } from "react-router";
 import { connect } from "react-redux";
 import { UPLOAD_QUESTIONS } from "../actions/QuestionAction";
@@ -8,7 +10,6 @@ import { UPLOAD_QUESTIONS } from "../actions/QuestionAction";
 const styles = {
   wrapper: { textAlign: "center" },
   listButton: {
-    height: 64,
     marginLeft: 32,
     marginRight: 32,
     marginBottom: 32,
@@ -24,9 +25,15 @@ const QuestionListSelection = (props) => {
 
   const history = useHistory();
 
+  const authAxios = axios.create({
+    baseURL: BASE_URL,
+    headers: { Authorization: `Token ${localStorage.getItem("key")}` },
+  });
+
   const getQuestionLists = async () => {
     const response = await authAxios.get(`/api/question_lists/`);
     const tempLists = [];
+
     for (const list of response.data) {
       tempLists.push(list.name);
     }
@@ -55,31 +62,50 @@ const QuestionListSelection = (props) => {
     history.push("/questions");
   };
 
+  useEffect(() => {
+    if (!localStorage.getItem("key")) {
+      history.push("/");
+    }
+  });
+
   // only load lists and all questions when the component is mounted
   useEffect(() => {
+    // const key = localStorage.getItem("key");
+    // if (key) {
+    //   debugger;
     getQuestionLists();
   }, []);
 
   return (
-    <div style={styles.wrapper}>
-      <div>
-        {lists.map((list, index) => (
+    <CenteredBox>
+      <div style={styles.wrapper}>
+        <Space direction="vertical">
+          <div style={{ fontSize: 24 }}>Please choose a topic</div>
+          <Space direction="horizontal">
+            {lists.map((list, index) => (
+              <Button
+                key={`${list}` + index}
+                size="large"
+                style={styles.listButton}
+                onClick={() => {
+                  setSelectedListID(index + 1);
+                }}
+                type={selectedListID === index + 1 ? "primary" : "default"}
+              >
+                {list}
+              </Button>
+            ))}
+          </Space>
           <Button
-            key={`${list}` + index}
-            style={styles.listButton}
-            onClick={() => {
-              setSelectedListID(index + 1);
-            }}
-            type={selectedListID === index + 1 ? "primary" : "default"}
+            size="large"
+            type="primary"
+            onClick={handleConfirmSelectionClick}
           >
-            {list}
+            Go to questions
           </Button>
-        ))}
+        </Space>
       </div>
-      <Button size="large" type="primary" onClick={handleConfirmSelectionClick}>
-        Go to questions
-      </Button>
-    </div>
+    </CenteredBox>
   );
 };
 

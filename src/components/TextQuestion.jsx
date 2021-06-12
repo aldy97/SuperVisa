@@ -14,7 +14,7 @@ const TextQuestion = (props) => {
       {!answer ? (
         <Input value={response} onChange={onChange}></Input>
       ) : (
-        <Input disabled value={answer.text}></Input>
+        <div>{answer.text}</div>
       )}
     </Card>
   );

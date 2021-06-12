@@ -26,28 +26,30 @@ const Review = (props) => {
       const question = questions[i];
       body.push({ question: `${question.id}`, text: answer.text });
     }
+
     return { answers: body };
   };
 
   // send api request to server for response submission
   const onSubmitClick = async () => {
     const requestBody = getRequestBody();
-    const response = await authAxios.post(`/api/responses/`, requestBody);
-
-    //TODO: when submission is succ
-    if (response.data) {
-    } else {
+    try {
+      await authAxios.post(`/api/responses/`, requestBody);
+      history.push("/result_succ");
+    } catch (err) {
+      console.log(err);
+      history.push("/result_fail");
     }
   };
 
   return (
     <div style={{ textAlign: "center" }}>
-      <div>Please review your answers</div>
-      <Space direction="vertical">
+      <div style={{ fontSize: 24 }}>Please review your answers👇</div>
+      <Space direction="vertical" size={32}>
         {questions.map((question, index) => {
           return (
             <QuestionCard
-              key={`${index} +${question.text}`}
+              key={`${question.text}`}
               question={question}
               answer={answers[index]}
             ></QuestionCard>
@@ -56,7 +58,7 @@ const Review = (props) => {
         <Space direction="horizontal">
           <Button
             size="large"
-            type="primary"
+            type="default"
             onClick={() => {
               clearQuestionsAndAnswers();
               history.push("/question_lists");

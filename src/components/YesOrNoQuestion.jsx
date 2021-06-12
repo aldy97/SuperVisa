@@ -20,14 +20,14 @@ const YesOrNoQuestion = (props) => {
               Yes
             </Button>
             <Button
-              type={response === "false" ? "primary" : "default"}
+              type={response === "no" ? "primary" : "default"}
               onClick={() => onButtonClick(false)}
             >
               No
             </Button>
           </>
         ) : (
-          <Button type="primary">{answer.text}</Button>
+          <div>{answer.text.toUpperCase()}</div>
         )}
       </Space>
     </Card>
