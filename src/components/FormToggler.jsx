@@ -32,6 +32,7 @@ const StyledItem = styled.span`
   user-select: none;
 `;
 
+// Toggle between login and register for user when being clicked by user
 const LoginRegToggler = ({ isAtLogin, toggle }) => {
   const handleLoginClick = () => {
     if (!isAtLogin) {

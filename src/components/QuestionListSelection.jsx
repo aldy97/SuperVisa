@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Button, message } from "antd";
 import { authAxios } from "../utils/authAxios";
 import { useHistory } from "react-router";
+import { connect } from "react-redux";
+import { UPLOAD_QUESTIONS } from "../actions/QuestionAction";
 
 const styles = {
   wrapper: { textAlign: "center" },
@@ -14,7 +16,7 @@ const styles = {
 };
 
 // Page: selecting from question lists
-const QuestionListSelection = () => {
+const QuestionListSelection = (props) => {
   // obtained from api request, list of string:
   const [lists, setLists] = useState([]);
   // index of the selected list:
@@ -36,8 +38,9 @@ const QuestionListSelection = () => {
     const response = await authAxios.get(
       `/api/questions/?list=${selectedListID}`
     );
+
     const questions = response.data;
-    console.log(questions);
+    props.updateQuestionsToRedux(questions);
   };
 
   // if a question list is selected, directs it to questions page
@@ -80,4 +83,16 @@ const QuestionListSelection = () => {
   );
 };
 
-export default QuestionListSelection;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateQuestionsToRedux(questions) {
+      const action = {
+        type: UPLOAD_QUESTIONS,
+        questions,
+      };
+      dispatch(action);
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(QuestionListSelection);

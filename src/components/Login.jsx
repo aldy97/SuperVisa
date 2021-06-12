@@ -5,7 +5,7 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { Redirect } from "react-router-dom";
 
-// Login form
+// Login form:
 const Login = () => {
   // once login is successful, directs to questions pages
   const [isLogin, setIsLogin] = useState(false);
@@ -27,7 +27,7 @@ const Login = () => {
         setIsLogin(true);
       }
     } catch (err) {
-      console.log(response.data);
+      console.log(err);
     }
   };
 
