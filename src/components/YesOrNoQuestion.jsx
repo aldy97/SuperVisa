@@ -1,14 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card, Button, Space } from "antd";
 
 const YesOrNoQuestion = (props) => {
-  const { question, setResponse, answer } = props;
-
-  const [isYes, setIsYes] = useState(null);
+  const { question, response, setResponse, answer } = props;
 
   const onButtonClick = (yes) => {
     setResponse(yes ? "yes" : "no");
-    setIsYes(yes);
   };
 
   return (
@@ -17,13 +14,13 @@ const YesOrNoQuestion = (props) => {
         {!answer ? (
           <>
             <Button
-              type={isYes ? "primary" : "default"}
+              type={response === "yes" ? "primary" : "default"}
               onClick={() => onButtonClick(true)}
             >
               Yes
             </Button>
             <Button
-              type={isYes === false ? "primary" : "default"}
+              type={response === "false" ? "primary" : "default"}
               onClick={() => onButtonClick(false)}
             >
               No

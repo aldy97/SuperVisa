@@ -48,6 +48,7 @@ const Questions = (props) => {
           </div>
           <QuestionCard
             question={questions[currentIndex]}
+            response={response}
             setResponse={setResponse}
           ></QuestionCard>
         </>

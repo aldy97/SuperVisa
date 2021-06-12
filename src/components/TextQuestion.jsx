@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Input } from "antd";
 
 const TextQuestion = (props) => {
-  const { question, setResponse, answer } = props;
+  const { question, response, setResponse, answer } = props;
 
   const onChange = (e) => {
     const { value } = e.target;
@@ -12,7 +12,7 @@ const TextQuestion = (props) => {
   return (
     <Card title={question.text + "?"}>
       {!answer ? (
-        <Input onChange={onChange}></Input>
+        <Input value={response} onChange={onChange}></Input>
       ) : (
         <Input disabled value={answer.text}></Input>
       )}
