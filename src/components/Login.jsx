@@ -3,6 +3,7 @@ import { StyledForm } from "./Register";
 import { Form, Input, Button, message } from "antd";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
+import { Redirect } from "react-router-dom";
 
 // Login form
 const Login = () => {
@@ -23,12 +24,13 @@ const Login = () => {
     if (response.data.key) {
       localStorage.setItem("key", response.data.key);
       setIsLogin(true);
+      console.log(response.data.key);
     } else {
       message.error("Login failed");
     }
   };
 
-  return (
+  return !isLogin ? (
     <StyledForm name="basic" initialValues={{ remember: true }}>
       <Form.Item
         rules={[{ required: true, message: "Please input your email!" }]}
@@ -71,6 +73,8 @@ const Login = () => {
         </Button>
       </Form.Item>
     </StyledForm>
+  ) : (
+    <Redirect to="/questions"></Redirect>
   );
 };
 

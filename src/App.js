@@ -1,10 +1,19 @@
 import React from "react";
 import LoginRegister from "./components/LoginRegister";
+import QuestionListSelection from "./components/QuestionListSelection";
+import { BrowserRouter, Route } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <LoginRegister></LoginRegister>
+      <BrowserRouter>
+        <Route path="/" exact component={LoginRegister}></Route>
+        <Route
+          path="/questions"
+          exact
+          component={QuestionListSelection}
+        ></Route>
+      </BrowserRouter>
     </div>
   );
 }
