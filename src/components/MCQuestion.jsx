@@ -1,12 +1,32 @@
-import React from "react";
-import { Button } from "antd";
+import React, { useState } from "react";
+import { Card, Checkbox } from "antd";
 
 const MCQuestion = (props) => {
-  const { question } = props;
+  const { question, setResponse, answer } = props;
+  const [currentOption, setCurrentOption] = useState(null);
+
+  const onChange = (option) => {
+    setCurrentOption(option);
+    setResponse(option);
+  };
+
   return (
-    <>
-      <div>MC</div>
-    </>
+    <Card title={question.text + "?"}>
+      {!answer &&
+        question.choice_list.map((option) => {
+          return (
+            <Checkbox
+              checked={option === currentOption}
+              onChange={() => {
+                onChange(option);
+              }}
+            >
+              {option}
+            </Checkbox>
+          );
+        })}
+      {answer && <Checkbox checked>{answer.text}</Checkbox>}
+    </Card>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import QuestionCard from "./QuestionCard";
+import QuestionCard from "../components/QuestionCard";
 import { Button } from "antd";
 import { useSelector } from "react-redux";
 import { connect } from "react-redux";
@@ -10,7 +10,6 @@ import { useHistory } from "react-router";
 const Questions = (props) => {
   const { answerQuestion } = props;
 
-  // regaurdless question type, response is always string
   const [response, setResponse] = useState("");
 
   const { questions, answers } = useSelector((state) => {
@@ -20,35 +19,46 @@ const Questions = (props) => {
     };
   });
 
-  //   const history = useHistory();
-
+  const history = useHistory();
   const currentIndex = answers.length;
 
   // update answer to redux, and move on to the next question if there is any
   const onNextButtonClick = () => {
     const currentQuestion = questions[currentIndex];
 
+    // redux store update
     const answer = { question: `${currentQuestion.id}`, text: response };
     answers.push(answer);
-
     answerQuestion(answers);
+
+    setResponse("");
   };
 
-  //   useEffect(() => {
-  //     console.log(currentIndex);
-  //     console.log(answers);
-  //   }, []);
+  // redirects to review page
+  const onReviewButtonClick = () => {
+    history.push("/review");
+  };
 
   return (
     <div style={{ textAlign: "center" }}>
-      <div>
-        Answer question: {currentIndex + 1} / {questions.length}
-      </div>
-      <QuestionCard question={questions[currentIndex]}></QuestionCard>
-      {currentIndex + 1 === questions.length ? (
-        <Button type="primary" size="large">
-          Review
-        </Button>
+      {answers.length < questions.length && (
+        <>
+          <div>
+            Answer question: {currentIndex + 1} / {questions.length}
+          </div>
+          <QuestionCard
+            question={questions[currentIndex]}
+            setResponse={setResponse}
+          ></QuestionCard>
+        </>
+      )}
+      {answers.length === questions.length ? (
+        <>
+          <div>You have answered all questions</div>
+          <Button type="primary" size="large" onClick={onReviewButtonClick}>
+            Review
+          </Button>
+        </>
       ) : (
         <Button type="primary" size="large" onClick={onNextButtonClick}>
           Next

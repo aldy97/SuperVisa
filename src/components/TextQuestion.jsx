@@ -1,12 +1,22 @@
 import React from "react";
-import { Button } from "antd";
+import { Card, Input } from "antd";
 
 const TextQuestion = (props) => {
-  const { question } = props;
+  const { question, setResponse, answer } = props;
+
+  const onChange = (e) => {
+    const { value } = e.target;
+    setResponse(value);
+  };
+
   return (
-    <>
-      <div>Text</div>
-    </>
+    <Card title={question.text + "?"}>
+      {!answer ? (
+        <Input onChange={onChange}></Input>
+      ) : (
+        <Input disabled value={answer.text}></Input>
+      )}
+    </Card>
   );
 };
 

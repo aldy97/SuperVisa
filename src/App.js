@@ -1,7 +1,8 @@
 import React from "react";
-import LoginRegister from "./components/LoginRegister";
-import QuestionListSelection from "./components/QuestionListSelection";
-import Questions from "./components/Questions";
+import LoginRegister from "./pages/LoginRegister";
+import QuestionListSelection from "./pages/QuestionListSelection";
+import Questions from "./pages/Questions";
+import Review from "./pages/Review";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { configureStore } from "./reducers/index";
@@ -19,6 +20,7 @@ function App() {
           component={QuestionListSelection}
         ></Route>
         <Route path="/questions" exact component={Questions}></Route>
+        <Route path="/review" exact component={Review}></Route>
       </BrowserRouter>
     </Provider>
   );

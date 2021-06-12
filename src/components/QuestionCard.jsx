@@ -6,22 +6,41 @@ import NumberQuestion from "./NumberQuestion";
 
 // entry for rendering a specific question card depending on question type: Y/N, MC, Text or NUMBER
 const QuestionCard = (props) => {
-  const { question } = props;
+  const { question, setResponse, answer } = props;
 
   // only one specific question card will be mounted
   return (
     <div>
       {question.question_type === "TEXT" && (
-        <TextQuestion question={question}></TextQuestion>
+        <TextQuestion
+          question={question}
+          setResponse={setResponse}
+          answer={answer}
+        ></TextQuestion>
       )}
+
       {question.question_type === "MC" && (
-        <MCQuestion question={question}></MCQuestion>
+        <MCQuestion
+          question={question}
+          setResponse={setResponse}
+          answer={answer}
+        ></MCQuestion>
       )}
+
       {question.question_type === "YES_NO" && (
-        <YesOrNoQuestion question={question}></YesOrNoQuestion>
+        <YesOrNoQuestion
+          question={question}
+          setResponse={setResponse}
+          answer={answer}
+        ></YesOrNoQuestion>
       )}
+
       {question.question_type === "NUMBER" && (
-        <NumberQuestion question={question}></NumberQuestion>
+        <NumberQuestion
+          question={question}
+          setResponse={setResponse}
+          answer={answer}
+        ></NumberQuestion>
       )}
     </div>
   );
