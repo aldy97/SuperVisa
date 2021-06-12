@@ -31,25 +31,30 @@ const QuestionListSelection = () => {
     setLists(tempLists);
   };
 
+  // get questions based on question list id, upload that to redux;
   const getQuestions = async () => {
-    const response = await authAxios.get(`/api/questions/`);
+    const response = await authAxios.get(
+      `/api/questions/?list=${selectedListID}`
+    );
     const questions = response.data;
+    console.log(questions);
   };
 
   // if a question list is selected, directs it to questions page
   const handleConfirmSelectionClick = async () => {
+    // executes if no list is selected by user
     if (!selectedListID) {
       message.info("Please select one list");
       return;
     }
 
+    await getQuestions();
     history.push("/questions");
   };
 
   // only load lists and all questions when the component is mounted
   useEffect(() => {
     getQuestionLists();
-    getQuestions();
   }, []);
 
   return (

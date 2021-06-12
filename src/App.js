@@ -3,10 +3,14 @@ import LoginRegister from "./components/LoginRegister";
 import QuestionListSelection from "./components/QuestionListSelection";
 import Questions from "./components/Questions";
 import { BrowserRouter, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import { configureStore } from "./reducers/index";
+
+export const store = configureStore();
 
 function App() {
   return (
-    <div className="App">
+    <Provider store={store}>
       <BrowserRouter>
         <Route path="/" exact component={LoginRegister}></Route>
         <Route
@@ -16,7 +20,7 @@ function App() {
         ></Route>
         <Route path="/questions" exact component={Questions}></Route>
       </BrowserRouter>
-    </div>
+    </Provider>
   );
 }
 
