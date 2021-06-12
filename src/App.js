@@ -1,6 +1,7 @@
 import React from "react";
 import LoginRegister from "./components/LoginRegister";
 import QuestionListSelection from "./components/QuestionListSelection";
+import Questions from "./components/Questions";
 import { BrowserRouter, Route } from "react-router-dom";
 
 function App() {
@@ -9,10 +10,11 @@ function App() {
       <BrowserRouter>
         <Route path="/" exact component={LoginRegister}></Route>
         <Route
-          path="/questions"
+          path="/question_lists"
           exact
           component={QuestionListSelection}
         ></Route>
+        <Route path="/questions" exact component={Questions}></Route>
       </BrowserRouter>
     </div>
   );

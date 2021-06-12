@@ -21,12 +21,13 @@ const Login = () => {
     const response = await axios.post(url, request);
 
     // login is successfull if the sever returns the authentication key
-    if (response.data.key) {
-      localStorage.setItem("key", response.data.key);
-      setIsLogin(true);
-      console.log(response.data.key);
-    } else {
-      message.error("Login failed");
+    try {
+      if (response.data.key) {
+        localStorage.setItem("key", response.data.key);
+        setIsLogin(true);
+      }
+    } catch (err) {
+      console.log(response.data);
     }
   };
 
@@ -74,7 +75,7 @@ const Login = () => {
       </Form.Item>
     </StyledForm>
   ) : (
-    <Redirect to="/questions"></Redirect>
+    <Redirect to="/question_lists"></Redirect>
   );
 };
 
