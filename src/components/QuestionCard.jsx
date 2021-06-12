@@ -4,7 +4,7 @@ import MCQuestion from "./MCQuestion";
 import YesOrNoQuestion from "./YesOrNoQuestion";
 import NumberQuestion from "./NumberQuestion";
 
-// entry for rendering a specific question card depending on question type: Y/N, MC, Text
+// entry for rendering a specific question card depending on question type: Y/N, MC, Text or NUMBER
 const QuestionCard = (props) => {
   const { question } = props;
 
@@ -20,7 +20,9 @@ const QuestionCard = (props) => {
       {question.question_type === "YES_NO" && (
         <YesOrNoQuestion question={question}></YesOrNoQuestion>
       )}
-      {question.question_type === "NUMBER" && <NumberQuestion></NumberQuestion>}
+      {question.question_type === "NUMBER" && (
+        <NumberQuestion question={question}></NumberQuestion>
+      )}
     </div>
   );
 };
