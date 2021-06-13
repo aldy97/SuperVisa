@@ -4,7 +4,10 @@ import { authAxios } from "../utils/authAxios";
 import { Button, Space, message } from "antd";
 import { useHistory } from "react-router";
 import { connect } from "react-redux";
-import { UPLOAD_QUESTIONS } from "../actions/QuestionAction";
+import {
+  UPLOAD_QUESTIONS,
+  CLEAR_QUESTIONS_AND_ANSWERS,
+} from "../actions/QuestionAction";
 
 const styles = {
   wrapper: { textAlign: "center" },
@@ -17,6 +20,7 @@ const styles = {
 
 // Page: selecting from question lists
 const QuestionListSelection = (props) => {
+  const { updateQuestionsToRedux, clearQuestionsAndAnswers } = props;
   // obtained from api request, list of string:
   const [lists, setLists] = useState([]);
   // index of the selected list:
@@ -42,7 +46,7 @@ const QuestionListSelection = (props) => {
     const response = await axios.get(`/api/questions/?list=${selectedListID}`);
 
     const questions = response.data;
-    props.updateQuestionsToRedux(questions);
+    updateQuestionsToRedux(questions);
   };
 
   // if a question list is selected, directs it to questions page
@@ -52,6 +56,9 @@ const QuestionListSelection = (props) => {
       message.info("Please select one list");
       return;
     }
+
+    // clear redux in case users goes back from answering questions
+    clearQuestionsAndAnswers();
 
     await getQuestions();
     history.push("/questions");
@@ -73,7 +80,6 @@ const QuestionListSelection = (props) => {
       <div style={styles.wrapper}>
         <Space direction="vertical">
           <div style={{ fontSize: 32 }}>Please Choose a Topic👇</div>
-
           {lists.map((list, index) => (
             <Button
               key={`${list}` + index}
@@ -88,7 +94,6 @@ const QuestionListSelection = (props) => {
               {list}
             </Button>
           ))}
-
           <Button
             size="large"
             type="primary"
@@ -108,6 +113,12 @@ const mapDispatchToProps = (dispatch) => {
       const action = {
         type: UPLOAD_QUESTIONS,
         questions,
+      };
+      dispatch(action);
+    },
+    clearQuestionsAndAnswers() {
+      const action = {
+        type: CLEAR_QUESTIONS_AND_ANSWERS,
       };
       dispatch(action);
     },

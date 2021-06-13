@@ -4,6 +4,7 @@ import { Card, Input } from "antd";
 const NumberQuestion = (props) => {
   const { question, response, setResponse, answer } = props;
 
+  // In NumberQuestion, only numbers allowed in the answer
   const onChange = (e) => {
     const { value } = e.target;
     const reg = /^-?\d*(\.\d*)?$/;

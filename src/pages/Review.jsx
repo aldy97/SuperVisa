@@ -31,7 +31,7 @@ const Review = (props) => {
     return { answers: body };
   };
 
-  // send api request to server for response submission
+  // send api request to server for answers submission
   const onSubmitClick = async () => {
     const requestBody = getRequestBody();
     try {
@@ -41,7 +41,6 @@ const Review = (props) => {
 
       history.push("/result_succ");
     } catch (err) {
-      console.log(err);
       history.push("/result_fail");
     }
   };

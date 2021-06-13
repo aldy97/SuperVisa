@@ -16,6 +16,11 @@ const ResultPage = (props) => {
     history.push("/question_lists");
   };
 
+  const onBackToLoginPageClick = () => {
+    clearQuestionsAndAnswers();
+    history.push("/");
+  };
+
   return (
     <CenteredBox>
       <Result
@@ -29,16 +34,12 @@ const ResultPage = (props) => {
         extra={
           isSucc
             ? [
-                <Button onClick={onBackToListSelectionClick}>
+                <Button size="large" onClick={onBackToListSelectionClick}>
                   Back to question lists
                 </Button>,
               ]
             : [
-                <Button
-                  onClick={() => {
-                    history.push("/");
-                  }}
-                >
+                <Button size="large" onClick={onBackToLoginPageClick}>
                   Back to Login Page
                 </Button>,
               ]
