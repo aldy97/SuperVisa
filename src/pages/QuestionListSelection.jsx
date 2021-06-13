@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import {
   UPLOAD_QUESTIONS,
   CLEAR_QUESTIONS_AND_ANSWERS,
+  SWITCH_USER_STATUS,
 } from "../actions/QuestionAction";
 
 const styles = {
@@ -20,7 +21,8 @@ const styles = {
 
 // Page: selecting from question lists
 const QuestionListSelection = (props) => {
-  const { updateQuestionsToRedux, clearQuestionsAndAnswers } = props;
+  const { updateQuestionsToRedux, clearQuestionsAndAnswers, setIsLogin } =
+    props;
   // obtained from api request, list of string:
   const [lists, setLists] = useState([]);
   // index of the selected list:
@@ -72,6 +74,7 @@ const QuestionListSelection = (props) => {
 
   // only load lists and all questions when the component is mounted
   useEffect(() => {
+    setIsLogin();
     getQuestionLists();
   }, []);
 
@@ -116,10 +119,16 @@ const mapDispatchToProps = (dispatch) => {
       };
       dispatch(action);
     },
+
     clearQuestionsAndAnswers() {
       const action = {
         type: CLEAR_QUESTIONS_AND_ANSWERS,
       };
+      dispatch(action);
+    },
+
+    setIsLogin() {
+      const action = { type: SWITCH_USER_STATUS, isLogin: true };
       dispatch(action);
     },
   };
