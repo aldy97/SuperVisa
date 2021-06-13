@@ -14,6 +14,7 @@ const MCQuestion = (props) => {
         question.choice_list.map((option) => {
           return (
             <Checkbox
+              key={option}
               checked={option === response}
               onChange={() => {
                 onChange(option);

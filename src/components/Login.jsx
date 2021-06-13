@@ -30,7 +30,11 @@ const Login = (props) => {
         history.push("/question_lists");
       }
     } catch (err) {
-      message.error("Server error, please try again later :(");
+      const errorObject = err.response.data;
+      const keys = Object.keys(errorObject);
+      for (let i = 0; i < keys.length; i++) {
+        message.error(`${keys[i]}: ${errorObject[keys[i]]}`);
+      }
     }
   };
 

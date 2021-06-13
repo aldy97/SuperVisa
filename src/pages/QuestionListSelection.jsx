@@ -61,13 +61,10 @@ const QuestionListSelection = (props) => {
     if (!localStorage.getItem("key")) {
       history.push("/");
     }
-  });
+  }, []);
 
   // only load lists and all questions when the component is mounted
   useEffect(() => {
-    // const key = localStorage.getItem("key");
-    // if (key) {
-    //   debugger;
     getQuestionLists();
   }, []);
 
@@ -75,22 +72,23 @@ const QuestionListSelection = (props) => {
     <CenteredBox>
       <div style={styles.wrapper}>
         <Space direction="vertical">
-          <div style={{ fontSize: 24 }}>Please choose a topic</div>
-          <Space direction="horizontal">
-            {lists.map((list, index) => (
-              <Button
-                key={`${list}` + index}
-                size="large"
-                style={styles.listButton}
-                onClick={() => {
-                  setSelectedListID(index + 1);
-                }}
-                type={selectedListID === index + 1 ? "primary" : "default"}
-              >
-                {list}
-              </Button>
-            ))}
-          </Space>
+          <div style={{ fontSize: 32 }}>Please Choose a Topic👇</div>
+
+          {lists.map((list, index) => (
+            <Button
+              key={`${list}` + index}
+              size="large"
+              shape="round"
+              style={styles.listButton}
+              onClick={() => {
+                setSelectedListID(index + 1);
+              }}
+              type={selectedListID === index + 1 ? "primary" : "default"}
+            >
+              {list}
+            </Button>
+          ))}
+
           <Button
             size="large"
             type="primary"

@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import LoginRegister from "./pages/LoginRegister";
 import QuestionListSelection from "./pages/QuestionListSelection";
 import Questions from "./pages/Questions";
@@ -35,6 +36,7 @@ function App() {
           component={() => <Result isSucc={false} />}
         ></Route>
       </BrowserRouter>
+      <Footer></Footer>
     </Provider>
   );
 }

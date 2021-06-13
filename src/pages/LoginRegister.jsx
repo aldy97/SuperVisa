@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Login from "../components/Login";
+import logo from "../assets/logo.png";
 import { CenteredBox } from "./Questions";
 import Register from "../components/Register";
 import FormToggler from "../components/FormToggler";
@@ -25,6 +26,7 @@ const LoginRegister = () => {
 
   return (
     <CenteredBox>
+      <img style={{ width: 220, height: 84 }} src={logo}></img>
       <FormToggler isAtLogin={isAtLogin} toggle={toggle}></FormToggler>
       {isAtLogin && <Login></Login>}
       {!isAtLogin && <Register></Register>}

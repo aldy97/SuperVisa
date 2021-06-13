@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router";
 import { Form, Input, Button, message } from "antd";
 import styled from "styled-components";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
+import { connect } from "react-redux";
+import { SWITCH_USER_STATUS } from "../actions/QuestionAction";
 
 export const StyledForm = styled(Form)`
   width: 360px;
@@ -11,9 +14,8 @@ export const StyledForm = styled(Form)`
 `;
 
 // Register form
-const Register = () => {
-  // once registration is successful, directs to questions pages
-  const [isRegistered, setIsRegistered] = useState(false);
+const Register = (props) => {
+  const { setIsLogin } = props;
 
   // request field:
   const [username, setUsername] = useState("");
@@ -21,22 +23,31 @@ const Register = () => {
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
 
-  const handleRegisterBtnClick = async () => {
-    const url = `${BASE_URL}/auth/registration/`;
-    const request = {
-      username,
-      email,
-      password1,
-      password2,
-    };
-    const response = await axios.post(url, request);
+  const history = useHistory();
 
-    // registration is successful if the sever returns the authentication key
-    if (response.data.key) {
-      setIsRegistered(true);
-      localStorage.setItem("key", response.data.key);
-    } else {
-      message.error("Failed, please try again");
+  const handleRegisterBtnClick = async () => {
+    try {
+      const url = `${BASE_URL}/auth/registration/`;
+      const request = {
+        username,
+        email,
+        password1,
+        password2,
+      };
+      const response = await axios.post(url, request);
+
+      // registration is successful if the sever returns the authentication key
+      if (response.data.key) {
+        localStorage.setItem("key", response.data.key);
+        history.push("/question_lists");
+        setIsLogin();
+      }
+    } catch (err) {
+      const errorObject = err.response.data;
+      const keys = Object.keys(errorObject);
+      for (let i = 0; i < keys.length; i++) {
+        message.error(`${keys[i]}: ${errorObject[keys[i]]}`);
+      }
     }
   };
 
@@ -102,4 +113,13 @@ const Register = () => {
   );
 };
 
-export default Register;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setIsLogin() {
+      const action = { type: SWITCH_USER_STATUS, isLogin: true };
+      dispatch(action);
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Register);

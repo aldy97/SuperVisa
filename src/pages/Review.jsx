@@ -19,6 +19,7 @@ const Review = (props) => {
     };
   });
 
+  // processing data collected to get object following the api request schema
   const getRequestBody = () => {
     const body = [];
     for (let i = 0; i < questions.length; i++) {
@@ -45,9 +46,16 @@ const Review = (props) => {
     }
   };
 
+  // if user refreshes at Review, directs to question lists
+  useEffect(() => {
+    if (!questions.length) {
+      history.push("/question_lists");
+    }
+  }, []);
+
   return (
-    <div style={{ textAlign: "center" }}>
-      <div style={{ fontSize: 24 }}>Please review your answers👇</div>
+    <div style={{ textAlign: "center", paddingBottom: 200 }}>
+      <div style={{ fontSize: 24 }}>Please Review Your Answers👇</div>
       <Space direction="vertical" size={32}>
         {questions.map((question, index) => {
           return (
