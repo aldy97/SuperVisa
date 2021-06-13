@@ -7,3 +7,5 @@
 3. Redux
 4. axios
 5. Ant design UI
+6. Styled-components
+7. React router
