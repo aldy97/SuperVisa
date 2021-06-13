@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import QuestionCard from "../components/QuestionCard";
 import { Space, Button } from "antd";
 import { useSelector } from "react-redux";
@@ -34,7 +34,10 @@ const Review = (props) => {
   const onSubmitClick = async () => {
     const requestBody = getRequestBody();
     try {
-      await authAxios.post(`/api/responses/`, requestBody);
+      const key = localStorage.getItem("key");
+      const axios = authAxios(key);
+      await axios.post(`/api/responses/`, requestBody);
+
       history.push("/result_succ");
     } catch (err) {
       console.log(err);

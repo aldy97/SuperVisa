@@ -32,6 +32,21 @@ const Questions = (props) => {
   const history = useHistory();
   const currentIndex = answers.length;
 
+  // when auth token is deleted, directs back to login page
+  useEffect(() => {
+    const key = localStorage.getItem("key");
+    if (!key) {
+      history.push("/");
+    }
+  }, []);
+
+  // handles the case in which user refreshes the page when answering questions
+  useEffect(() => {
+    if (questions.length === 0) {
+      history.push("/question_lists");
+    }
+  }, []);
+
   // update answer to redux, and move on to the next question if there is any
   const onNextButtonClick = () => {
     if (!response) {

@@ -22,15 +22,27 @@ const ResultPage = (props) => {
         status={isSucc ? "success" : "warning"}
         title={
           isSucc
-            ? "Successfully Submitted Your Answers To SuperVisas!"
-            : "Something went wrong, please try agan later"
+            ? "Successfully Submitted Your Answers To SuperVisas🎉"
+            : "Something went wrong, please try agan later😱"
         }
         subTitle="You will hear back from SuperVisas very soon."
-        extra={[
-          <Button onClick={onBackToListSelectionClick}>
-            Back to question lists
-          </Button>,
-        ]}
+        extra={
+          isSucc
+            ? [
+                <Button onClick={onBackToListSelectionClick}>
+                  Back to question lists
+                </Button>,
+              ]
+            : [
+                <Button
+                  onClick={() => {
+                    history.push("/");
+                  }}
+                >
+                  Back to Login Page
+                </Button>,
+              ]
+        }
       />
     </CenteredBox>
   );

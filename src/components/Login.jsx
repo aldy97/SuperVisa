@@ -4,9 +4,12 @@ import { Form, Input, Button, message } from "antd";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { SWITCH_USER_STATUS } from "../actions/QuestionAction";
 
 // Login form:
-const Login = () => {
+const Login = (props) => {
+  const { setIsLogin } = props;
   // request field:
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -23,6 +26,7 @@ const Login = () => {
 
       if (response.data.key) {
         localStorage.setItem("key", response.data.key);
+        setIsLogin();
         history.push("/question_lists");
       }
     } catch (err) {
@@ -76,4 +80,13 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setIsLogin() {
+      const action = { type: SWITCH_USER_STATUS, isLogin: true };
+      dispatch(action);
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Login);

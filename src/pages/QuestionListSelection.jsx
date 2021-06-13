@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { CenteredBox } from "./Questions";
-import axios from "axios";
-import { BASE_URL } from "../utils/constants";
+import { authAxios } from "../utils/authAxios";
 import { Button, Space, message } from "antd";
 import { useHistory } from "react-router";
 import { connect } from "react-redux";
@@ -25,13 +24,11 @@ const QuestionListSelection = (props) => {
 
   const history = useHistory();
 
-  const authAxios = axios.create({
-    baseURL: BASE_URL,
-    headers: { Authorization: `Token ${localStorage.getItem("key")}` },
-  });
+  const key = localStorage.getItem("key");
+  const axios = authAxios(key);
 
   const getQuestionLists = async () => {
-    const response = await authAxios.get(`/api/question_lists/`);
+    const response = await axios.get(`/api/question_lists/`);
     const tempLists = [];
 
     for (const list of response.data) {
@@ -42,9 +39,7 @@ const QuestionListSelection = (props) => {
 
   // get questions based on question list id, upload that to redux;
   const getQuestions = async () => {
-    const response = await authAxios.get(
-      `/api/questions/?list=${selectedListID}`
-    );
+    const response = await axios.get(`/api/questions/?list=${selectedListID}`);
 
     const questions = response.data;
     props.updateQuestionsToRedux(questions);
